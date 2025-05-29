@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identificação de Material</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #3c9141;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        
+        .bordado {
+            border-left: 5px solid #FF69B4;
+        }
+        
+        .etiprint {
+            border-left: 5px solid #4169E1;
+        }
+        
+        .nylon {
+            border-left: 5px solid #9370DB;
+        }
+        
+        .metal {
+            border-left: 5px solid #C0C0C0;
+        }
+        
+        .cadarco {
+            border-left: 5px solid #FFA500;
+        }
+        
+        .termolight {
+            border-left: 5px solid #FF4500;
+        }
+        
+        .dtf {
+            border-left: 5px solid #32CD32;
+        }
+        
+        .tag {
+            border-left: 5px solid #008080;
+        }
+        
+        .outro {
+            border-left: 5px solid #808080;
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: #d9534f;
+        }
+        
+        .material-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Valor a Pagar</h1>
+        
+        <div class="form-group">
+            <label for="adiantamento">Valor do adiantamento:</label>
+            <input type="number" id="adiantamento" step="0.01" placeholder="Digite o valor do adiantamento">
+        </div>
+        
+        <div class="form-group">
+            <label for="total">Valor total do pedido:</label>
+            <input type="number" id="total" step="0.01" placeholder="Digite o valor total">
+        </div>
+        
+        <div class="form-group">
+            <label for="material">Qual o material:</label>
+            <select id="material">
+                <option value="">Selecione o material</option>
+                <option value="bordado">Bordado</option>
+                <option value="etiprint">Etiprint</option>
+                <option value="nylon">Nylon</option>
+                <option value="metal">Metal</option>
+                <option value="cadarco">Cadarço</option>
+                <option value="termolight">Termolight</option>
+                <option value="dtf">DTF</option>
+                <option value="tag">Tag</option>
+                <option value="botao">Botão</option>
+                <option value="rebite">Rebite</option>
+            </select>
+        </div>
+        
+        <button onclick="calcular()">Calcular</button>
+        
+        <div id="result" class="result">
+            <p id="mensagem"></p>
+        </div>
+    </div>
+
+    <script>
+        function calcular() {
+            const adiantamento = parseFloat(document.getElementById('adiantamento').value);
+            const total = parseFloat(document.getElementById('total').value);
+            const material = document.getElementById('material').value;
+            const restante = total - adiantamento;
+            
+            const resultDiv = document.getElementById('result');
+            const mensagem = document.getElementById('mensagem');
+            
+            // Reset classes
+            resultDiv.className = 'result';
+            
+            if (isNaN(adiantamento) || isNaN(total) || material === '') {
+                alert('Por favor, preencha todos os campos corretamente.');
+                return;
+            }
+            
+            let icon, msg, tipoProduto;
+            
+            switch(material) {
+                case 'bordado':
+                    resultDiv.classList.add('bordado');
+                    icon = '🧵';
+                    tipoProduto = 'a sua etiqueta bordada está pronta';
+                    break;
+                case 'etiprint':
+                    resultDiv.classList.add('etiprint');
+                    icon = '🖨️';
+                    tipoProduto = 'o seu etiprint está pronto';
+                    break;
+                case 'nylon':
+                    resultDiv.classList.add('nylon');
+                    icon = '🧶';
+                    tipoProduto = 'etiqueta de nylon está pronta';
+                    break;
+                case 'metal':
+                    resultDiv.classList.add('metal');
+                    icon = '⛓️';
+                    tipoProduto = 'a plaquinha está pronta';
+                    break;
+                case 'cadarco':
+                    resultDiv.classList.add('cadarco');
+                    icon = '👟';
+                    tipoProduto = 'o seu cadarço está pronto';
+                    break;
+                case 'termolight':
+                    resultDiv.classList.add('termolight');
+                    icon = '🔥';
+                    tipoProduto = 'o seu termolight está pronto';
+                    break;
+                case 'dtf':
+                    resultDiv.classList.add('dtf');
+                    icon = '🎨';
+                    tipoProduto = 'o ser transfer DTF está pronto';
+                    break;
+                case 'tag':
+                    resultDiv.classList.add('tag');
+                    icon = '🏷️';
+                    tipoProduto = 'o seu tag está pronto';
+                    break;
+                case 'rebite':
+                    resultDiv.classList.add('rebite');
+                    icon = '🏷️';
+                    tipoProduto = 'o seu Rebite está pronto';
+                    break;
+                default:
+                    resultDiv.classList.add('botao');
+                    icon = '🛍️';
+                    tipoProduto = 'o seu Botão está pronto';
+                    
+            }
+            
+            msg = `Bom dia, ${tipoProduto}, o total deu R$${total.toFixed(2)}, foi feito um adiantamento de R$${adiantamento.toFixed(2)} ficou restando <span class="highlight">*R$${restante.toFixed(2)}*</span>`;
+            
+            mensagem.innerHTML = `<span class="material-icon">${icon}</span>${msg}`;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
